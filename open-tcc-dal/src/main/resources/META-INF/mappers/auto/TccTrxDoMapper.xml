@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.ywj.opentcc.dal.mapper.auto.TccTrxDoMapper" >
+  <resultMap id="BaseResultMap" type="org.ywj.opentcc.dal.entity.TccTrxDo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="REGION" property="region" jdbcType="VARCHAR" />
+    <result column="GROUP_TRX_ID" property="groupTrxId" jdbcType="CHAR" />
+    <result column="BRANCH_TRX_ID" property="branchTrxId" jdbcType="CHAR" />
+    <result column="STATUS" property="status" jdbcType="TINYINT" />
+    <result column="TRX_TYPE" property="trxType" jdbcType="TINYINT" />
+    <result column="RETRY_TIMES" property="retryTimes" jdbcType="INTEGER" />
+    <result column="VERSION" property="version" jdbcType="INTEGER" />
+    <result column="GMT_CREATE" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="GMT_MODIFIED" property="gmtModified" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="org.ywj.opentcc.dal.entity.TccTrxDo" extends="BaseResultMap" >
+    <result column="CONTENT" property="content" jdbcType="LONGVARBINARY" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, REGION, GROUP_TRX_ID, BRANCH_TRX_ID, STATUS, TRX_TYPE, RETRY_TIMES, VERSION, 
+    GMT_CREATE, GMT_MODIFIED
+  </sql>
+  <sql id="Blob_Column_List" >
+    CONTENT
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="org.ywj.opentcc.dal.entity.TccTrxDoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from TCC_TRX
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.ywj.opentcc.dal.entity.TccTrxDoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from TCC_TRX
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from TCC_TRX
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from TCC_TRX
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.ywj.opentcc.dal.entity.TccTrxDoExample" >
+    delete from TCC_TRX
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.ywj.opentcc.dal.entity.TccTrxDo" >
+    insert into TCC_TRX (id, REGION, GROUP_TRX_ID, 
+      BRANCH_TRX_ID, STATUS, TRX_TYPE, 
+      RETRY_TIMES, VERSION, GMT_CREATE, 
+      GMT_MODIFIED, CONTENT)
+    values (#{id,jdbcType=BIGINT}, #{region,jdbcType=VARCHAR}, #{groupTrxId,jdbcType=CHAR}, 
+      #{branchTrxId,jdbcType=CHAR}, #{status,jdbcType=TINYINT}, #{trxType,jdbcType=TINYINT}, 
+      #{retryTimes,jdbcType=INTEGER}, #{version,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="org.ywj.opentcc.dal.entity.TccTrxDo" >
+    insert into TCC_TRX
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="region != null" >
+        REGION,
+      </if>
+      <if test="groupTrxId != null" >
+        GROUP_TRX_ID,
+      </if>
+      <if test="branchTrxId != null" >
+        BRANCH_TRX_ID,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="trxType != null" >
+        TRX_TYPE,
+      </if>
+      <if test="retryTimes != null" >
+        RETRY_TIMES,
+      </if>
+      <if test="version != null" >
+        VERSION,
+      </if>
+      <if test="gmtCreate != null" >
+        GMT_CREATE,
+      </if>
+      <if test="gmtModified != null" >
+        GMT_MODIFIED,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="region != null" >
+        #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="groupTrxId != null" >
+        #{groupTrxId,jdbcType=CHAR},
+      </if>
+      <if test="branchTrxId != null" >
+        #{branchTrxId,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="trxType != null" >
+        #{trxType,jdbcType=TINYINT},
+      </if>
+      <if test="retryTimes != null" >
+        #{retryTimes,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.ywj.opentcc.dal.entity.TccTrxDoExample" resultType="java.lang.Integer" >
+    select count(*) from TCC_TRX
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update TCC_TRX
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.region != null" >
+        REGION = #{record.region,jdbcType=VARCHAR},
+      </if>
+      <if test="record.groupTrxId != null" >
+        GROUP_TRX_ID = #{record.groupTrxId,jdbcType=CHAR},
+      </if>
+      <if test="record.branchTrxId != null" >
+        BRANCH_TRX_ID = #{record.branchTrxId,jdbcType=CHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.trxType != null" >
+        TRX_TYPE = #{record.trxType,jdbcType=TINYINT},
+      </if>
+      <if test="record.retryTimes != null" >
+        RETRY_TIMES = #{record.retryTimes,jdbcType=INTEGER},
+      </if>
+      <if test="record.version != null" >
+        VERSION = #{record.version,jdbcType=INTEGER},
+      </if>
+      <if test="record.gmtCreate != null" >
+        GMT_CREATE = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtModified != null" >
+        GMT_MODIFIED = #{record.gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.content != null" >
+        CONTENT = #{record.content,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update TCC_TRX
+    set id = #{record.id,jdbcType=BIGINT},
+      REGION = #{record.region,jdbcType=VARCHAR},
+      GROUP_TRX_ID = #{record.groupTrxId,jdbcType=CHAR},
+      BRANCH_TRX_ID = #{record.branchTrxId,jdbcType=CHAR},
+      STATUS = #{record.status,jdbcType=TINYINT},
+      TRX_TYPE = #{record.trxType,jdbcType=TINYINT},
+      RETRY_TIMES = #{record.retryTimes,jdbcType=INTEGER},
+      VERSION = #{record.version,jdbcType=INTEGER},
+      GMT_CREATE = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      GMT_MODIFIED = #{record.gmtModified,jdbcType=TIMESTAMP},
+      CONTENT = #{record.content,jdbcType=LONGVARBINARY}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update TCC_TRX
+    set id = #{record.id,jdbcType=BIGINT},
+      REGION = #{record.region,jdbcType=VARCHAR},
+      GROUP_TRX_ID = #{record.groupTrxId,jdbcType=CHAR},
+      BRANCH_TRX_ID = #{record.branchTrxId,jdbcType=CHAR},
+      STATUS = #{record.status,jdbcType=TINYINT},
+      TRX_TYPE = #{record.trxType,jdbcType=TINYINT},
+      RETRY_TIMES = #{record.retryTimes,jdbcType=INTEGER},
+      VERSION = #{record.version,jdbcType=INTEGER},
+      GMT_CREATE = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      GMT_MODIFIED = #{record.gmtModified,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.ywj.opentcc.dal.entity.TccTrxDo" >
+    update TCC_TRX
+    <set >
+      <if test="region != null" >
+        REGION = #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="groupTrxId != null" >
+        GROUP_TRX_ID = #{groupTrxId,jdbcType=CHAR},
+      </if>
+      <if test="branchTrxId != null" >
+        BRANCH_TRX_ID = #{branchTrxId,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="trxType != null" >
+        TRX_TYPE = #{trxType,jdbcType=TINYINT},
+      </if>
+      <if test="retryTimes != null" >
+        RETRY_TIMES = #{retryTimes,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        VERSION = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        GMT_CREATE = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.ywj.opentcc.dal.entity.TccTrxDo" >
+    update TCC_TRX
+    set REGION = #{region,jdbcType=VARCHAR},
+      GROUP_TRX_ID = #{groupTrxId,jdbcType=CHAR},
+      BRANCH_TRX_ID = #{branchTrxId,jdbcType=CHAR},
+      STATUS = #{status,jdbcType=TINYINT},
+      TRX_TYPE = #{trxType,jdbcType=TINYINT},
+      RETRY_TIMES = #{retryTimes,jdbcType=INTEGER},
+      VERSION = #{version,jdbcType=INTEGER},
+      GMT_CREATE = #{gmtCreate,jdbcType=TIMESTAMP},
+      GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP},
+      CONTENT = #{content,jdbcType=LONGVARBINARY}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.ywj.opentcc.dal.entity.TccTrxDo" >
+    update TCC_TRX
+    set REGION = #{region,jdbcType=VARCHAR},
+      GROUP_TRX_ID = #{groupTrxId,jdbcType=CHAR},
+      BRANCH_TRX_ID = #{branchTrxId,jdbcType=CHAR},
+      STATUS = #{status,jdbcType=TINYINT},
+      TRX_TYPE = #{trxType,jdbcType=TINYINT},
+      RETRY_TIMES = #{retryTimes,jdbcType=INTEGER},
+      VERSION = #{version,jdbcType=INTEGER},
+      GMT_CREATE = #{gmtCreate,jdbcType=TIMESTAMP},
+      GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

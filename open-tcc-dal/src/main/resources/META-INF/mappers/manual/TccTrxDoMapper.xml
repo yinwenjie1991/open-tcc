@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="tccTrxManualMapper" >
+    <resultMap id="BaseResultMap" type="org.ywj.opentcc.dal.entity.TccTrxDo" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="REGION" property="region" jdbcType="VARCHAR" />
+        <result column="GROUP_TRX_ID" property="groupTrxId" jdbcType="CHAR" />
+        <result column="BRANCH_TRX_ID" property="branchTrxId" jdbcType="CHAR" />
+        <result column="STATUS" property="status" jdbcType="TINYINT" />
+        <result column="TRX_TYPE" property="trxType" jdbcType="TINYINT" />
+        <result column="RETRY_TIMES" property="retryTimes" jdbcType="INTEGER" />
+        <result column="VERSION" property="version" jdbcType="INTEGER" />
+        <result column="GMT_CREATE" property="gmtCreate" jdbcType="TIMESTAMP" />
+        <result column="GMT_MODIFIED" property="gmtModified" jdbcType="TIMESTAMP" />
+        <result column="CONTENT"  property="content" jdbcType="LONGVARBINARY" />
+    </resultMap>
+    <!--<resultMap id="ResultMapWithBLOBs" type="org.ywj.opentcc.dal.entity.TccTrxDo" extends="BaseResultMap" >-->
+        <!--<result column="CONTENT" property="content" jdbcType="LONGVARBINARY" />-->
+    <!--</resultMap>-->
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List" >
+        id, REGION, GROUP_TRX_ID, BRANCH_TRX_ID, STATUS, TRX_TYPE, RETRY_TIMES, VERSION,
+        GMT_CREATE, GMT_MODIFIED
+    </sql>
+    <sql id="Blob_Column_List" >
+        CONTENT
+    </sql>
+
+    <insert id="insert" parameterType="org.ywj.opentcc.dal.entity.TccTrxDo" >
+        insert into #{tccTbName} (id, REGION, GROUP_TRX_ID,
+        BRANCH_TRX_ID, STATUS, TRX_TYPE,
+        RETRY_TIMES, VERSION, GMT_CREATE,
+        GMT_MODIFIED, CONTENT)
+        values (#{id,jdbcType=BIGINT}, #{region,jdbcType=VARCHAR}, #{groupTrxId,jdbcType=CHAR},
+        #{branchTrxId,jdbcType=CHAR}, #{status,jdbcType=TINYINT}, #{trxType,jdbcType=TINYINT},
+        #{retryTimes,jdbcType=INTEGER}, #{version,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP},
+        #{gmtModified,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARBINARY})
+    </insert>
+    
+    <update id="update" parameterType="org.ywj.opentcc.dal.entity.TccTrxDo">
+        update #{tccTbName}
+        set
+        CONTENT = #{content,jdbcType=LONGVARBINARY},
+        STATUS = #{status,jdbcType=TINYINT},
+        VERSION = VERSION + 1,
+        RETRY_TIMES = #{retryTimes,jdbcType=INTEGER},
+        GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP}
+        where GROUP_TRX_ID = #{groupTrxId,jdbcType=CHAR} AND
+        BRANCH_TRX_ID = #{branchTrxId,jdbcType=CHAR} AND
+        VERSION = #{version,jdbcType=INTEGER}
+
+    </update>
+
+    <select id="selectByTrxId" resultMap="BaseResultMap" parameterType="map" >
+    select id, REGION, GROUP_TRX_ID, BRANCH_TRX_ID, CONTENT, STATUS, TRX_TYPE,
+    RETRY_TIMES, VERSION, GMT_CREATE, GMT_MODIFIED from TCC_TRX
+    WHERE GROUP_TRX_ID=#{groupTrxId} AND BRANCH_TRX_ID=#{branchTrxId}
+    </select>
+</mapper>
