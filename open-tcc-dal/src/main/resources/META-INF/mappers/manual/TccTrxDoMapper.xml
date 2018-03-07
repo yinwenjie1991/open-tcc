@@ -110,7 +110,12 @@
 
     <select id="selectByTrxId" resultMap="BaseResultMap" parameterType="map" >
     select id, REGION, GROUP_TRX_ID, BRANCH_TRX_ID, CONTENT, STATUS, TRX_TYPE,
-    RETRY_TIMES, VERSION, GMT_CREATE, GMT_MODIFIED from TCC_TRX
+    RETRY_TIMES, VERSION, GMT_CREATE, GMT_MODIFIED from #{tccTbName}
     WHERE GROUP_TRX_ID=#{groupTrxId} AND BRANCH_TRX_ID=#{branchTrxId}
     </select>
+
+    <delete id="deleteByTrxId" parameterType="map" >
+        DELETE FROM #{tccTbName}
+        WHERE GROUP_TRX_ID=#{groupTrxId} AND BRANCH_TRX_ID=#{branchTrxId}
+    </delete>
 </mapper>
