@@ -7,6 +7,8 @@ package org.ywj.opentcc.dal.config;
  */
 public class TccDBConfig {
 
+    private String TB_KEY = "";
+
     private String REGION = "DEFAULT";
 
     private String TTC_TB_NAME = "TCC_TRX";

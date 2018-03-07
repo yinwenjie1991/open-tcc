@@ -17,4 +17,6 @@ public interface TransactionDAO {
 
     TccTrxDo findByTrxId(String groupTrxId, String branchTrxId);
 
+    int delete(String groupTrxId, String branchTrxId);
+
 }

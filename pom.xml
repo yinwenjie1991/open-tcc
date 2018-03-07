@@ -77,5 +77,6 @@
         <module>open-tcc-core</module>
         <module>open-tcc-dal</module>
         <module>open-tcc-common</module>
+        <module>open-tcc-demo</module>
     </modules>
 </project>

@@ -68,11 +68,26 @@ public class TransactionDAOImpl extends SqlSessionDaoSupport implements Transact
         Map<String, String> map = new HashMap<String, String>();
         map.put("groupTrxId", groupTrxId);
         map.put("branchTrxId", branchTrxId);
+        doConfig(map);
         return getSqlSession().selectOne("selectByTrxId", map);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public int delete(String groupTrxId, String branchTrxId) {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("groupTrxId", groupTrxId);
+        map.put("branchTrxId", branchTrxId);
+        doConfig(map);
+        return getSqlSession().delete("deleteByTrxId", map);
     }
 
     private void doConfig(TccTrxDo tccTrxDo) {
         tccTrxDo.setTccTbName(tccDBConfig.getTTCTB_NAME());
         tccTrxDo.setRegion(tccDBConfig.getREGION());
+    }
+
+    private void doConfig(Map map) {
+        map.put("tccTbName", tccDBConfig.getTTCTB_NAME());
     }
 }

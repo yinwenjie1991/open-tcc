@@ -216,6 +216,8 @@ public class TransactionManager {
     private void trxRollback(Transaction transaction) {
         try {
             transaction.rollback();
+            //删除事务
+            transactionDAO.delete(transaction.getGroupTrxId(), transaction.getBranchTrxId());
         } catch (Throwable throwable) {
             //logger
             throw new TccCancelException(throwable);
@@ -225,6 +227,8 @@ public class TransactionManager {
     private void trxCommit(Transaction transaction) {
         try {
             transaction.commit();
+            //删除事务
+            transactionDAO.delete(transaction.getGroupTrxId(), transaction.getBranchTrxId());
         } catch (Throwable throwable) {
             //logger
             throw new TccConfirmException(throwable);
