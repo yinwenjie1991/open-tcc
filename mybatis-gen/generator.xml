@@ -10,32 +10,56 @@
             <property name="suppressAllComments" value="true" />
         </commentGenerator>
 
+        <!--<jdbcConnection driverClass="com.mysql.jdbc.Driver"-->
+            <!--connectionURL="jdbc:mysql://127.0.0.1:3306/OPEN-TCC" userId="root" password="123">-->
+        <!--</jdbcConnection>-->
+        <!--<jdbcConnection driverClass="com.mysql.jdbc.Driver"-->
+                        <!--connectionURL="jdbc:mysql://127.0.0.1:3306/tcc_demo_db1" userId="root" password="123">-->
+        <!--</jdbcConnection>-->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-            connectionURL="jdbc:mysql://127.0.0.1:3306/OPEN-TCC" userId="root" password="123">
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/tcc_demo_db2" userId="root" password="123">
         </jdbcConnection>
 
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false" />
         </javaTypeResolver>
 
-        <javaModelGenerator targetPackage="org.ywj.opentcc.dal.entity"
-            targetProject="../open-tcc-dal/src/main/java">
+        <!--<javaModelGenerator targetPackage="org.ywj.opentcc.dal.entity"-->
+            <!--targetProject="../open-tcc-dal/src/main/java">-->
+            <!--<property name="enableSubPackages" value="true" />-->
+            <!--<property name="trimStrings" value="true" />-->
+        <!--</javaModelGenerator>-->
+        <javaModelGenerator targetPackage="org.ywj.opentcc.demo.local.dal.entity"
+                            targetProject="../open-tcc-demo/open-tcc-demo-local/open-tcc-demo-local-dal/src/main/java">
             <property name="enableSubPackages" value="true" />
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
 
+
+        <!--<sqlMapGenerator targetPackage="/"-->
+            <!--targetProject="../open-tcc-dal/src/main/resources/META-INF/mappers/auto">-->
+            <!--<property name="enableSubPackages" value="true" />-->
+        <!--</sqlMapGenerator>-->
         <sqlMapGenerator targetPackage="/"
-            targetProject="../open-tcc-dal/src/main/resources/META-INF/mappers/auto">
+                         targetProject="../open-tcc-demo/open-tcc-demo-local/open-tcc-demo-local-dal/src/main/resources/META-INF/mappers/auto">
             <property name="enableSubPackages" value="true" />
         </sqlMapGenerator>
 
-        <javaClientGenerator type="XMLMAPPER" 
-            targetPackage="org.ywj.opentcc.dal.mapper.auto"
-            targetProject="../open-tcc-dal/src/main/java">
+        <!--<javaClientGenerator type="XMLMAPPER" -->
+            <!--targetPackage="org.ywj.opentcc.dal.mapper.auto"-->
+            <!--targetProject="../open-tcc-dal/src/main/java">-->
+            <!--<property name="enableSubPackages" value="true" />-->
+        <!--</javaClientGenerator>-->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="org.ywj.opentcc.demo.local.dal.mapper.auto"
+                             targetProject="../open-tcc-demo/open-tcc-demo-local/open-tcc-demo-local-dal/src/main/java">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
         <!-- add your table below -->
-        <table tableName="TCC_TRX" domainObjectName="TccTrxDo" />
+        <!--<table tableName="TCC_TRX" domainObjectName="TccTrxDo" />-->
+        <!--<table tableName="tcc_t1" domainObjectName="TccTbOne" />-->
+        <table tableName="tcc_t2" domainObjectName="TccTbTwo" />
+
     </context>
 </generatorConfiguration>

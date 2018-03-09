@@ -3,25 +3,21 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <modules>
-        <module>open-tcc-demo-local</module>
-    </modules>
     <parent>
-        <artifactId>open-tcc</artifactId>
+        <artifactId>open-tcc-demo</artifactId>
         <groupId>org.ywj</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <groupId>org.ywj</groupId>
-    <artifactId>open-tcc-demo</artifactId>
+    <artifactId>open-tcc-demo-local</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>open-tcc-demo</name>
-    <dependencies>
-        <dependency>
-            <groupId>org.ywj</groupId>
-            <artifactId>open-tcc-core</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
+    <name>open-tcc-demo-local</name>
+    <modules>
+        <module>open-tcc-demo-local-dal</module>
+        <module>open-tcc-demo-local-biz</module>
+        <module>open-tcc-demo-local-web</module>
+        <module>open-tcc-demo-local-runner</module>
+    </modules>
 
 </project>

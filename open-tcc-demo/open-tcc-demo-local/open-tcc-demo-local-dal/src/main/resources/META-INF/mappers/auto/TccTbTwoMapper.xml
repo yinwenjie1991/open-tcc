@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.ywj.opentcc.demo.local.dal.mapper.auto.TccTbTwoMapper" >
+  <resultMap id="BaseResultMap" type="org.ywj.opentcc.demo.local.dal.entity.TccTbTwo" >
+    <id column="t2_id" property="t2Id" jdbcType="INTEGER" />
+    <result column="uniq_no" property="uniqNo" jdbcType="CHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    t2_id, uniq_no, status
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.ywj.opentcc.demo.local.dal.entity.TccTbTwoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tcc_t2
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tcc_t2
+    where t2_id = #{t2Id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tcc_t2
+    where t2_id = #{t2Id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.ywj.opentcc.demo.local.dal.entity.TccTbTwoExample" >
+    delete from tcc_t2
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.ywj.opentcc.demo.local.dal.entity.TccTbTwo" >
+    insert into tcc_t2 (t2_id, uniq_no, status
+      )
+    values (#{t2Id,jdbcType=INTEGER}, #{uniqNo,jdbcType=CHAR}, #{status,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.ywj.opentcc.demo.local.dal.entity.TccTbTwo" >
+    insert into tcc_t2
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="t2Id != null" >
+        t2_id,
+      </if>
+      <if test="uniqNo != null" >
+        uniq_no,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="t2Id != null" >
+        #{t2Id,jdbcType=INTEGER},
+      </if>
+      <if test="uniqNo != null" >
+        #{uniqNo,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.ywj.opentcc.demo.local.dal.entity.TccTbTwoExample" resultType="java.lang.Integer" >
+    select count(*) from tcc_t2
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tcc_t2
+    <set >
+      <if test="record.t2Id != null" >
+        t2_id = #{record.t2Id,jdbcType=INTEGER},
+      </if>
+      <if test="record.uniqNo != null" >
+        uniq_no = #{record.uniqNo,jdbcType=CHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tcc_t2
+    set t2_id = #{record.t2Id,jdbcType=INTEGER},
+      uniq_no = #{record.uniqNo,jdbcType=CHAR},
+      status = #{record.status,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.ywj.opentcc.demo.local.dal.entity.TccTbTwo" >
+    update tcc_t2
+    <set >
+      <if test="uniqNo != null" >
+        uniq_no = #{uniqNo,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where t2_id = #{t2Id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.ywj.opentcc.demo.local.dal.entity.TccTbTwo" >
+    update tcc_t2
+    set uniq_no = #{uniqNo,jdbcType=CHAR},
+      status = #{status,jdbcType=TINYINT}
+    where t2_id = #{t2Id,jdbcType=INTEGER}
+  </update>
+</mapper>
