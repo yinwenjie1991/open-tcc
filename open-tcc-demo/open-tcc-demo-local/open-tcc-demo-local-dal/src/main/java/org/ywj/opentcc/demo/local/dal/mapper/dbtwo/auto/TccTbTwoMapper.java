@@ -1,4 +1,4 @@
-package org.ywj.opentcc.demo.local.dal.mapper.auto;
+package org.ywj.opentcc.demo.local.dal.mapper.dbtwo.auto;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
