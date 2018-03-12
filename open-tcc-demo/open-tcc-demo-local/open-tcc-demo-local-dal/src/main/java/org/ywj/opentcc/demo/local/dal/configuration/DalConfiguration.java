@@ -24,11 +24,11 @@ import org.springframework.transaction.support.TransactionTemplate;
 @Configuration
 @ComponentScan("org.ywj.opentcc.demo.local.dal")
 @EnableTransactionManagement
-@PropertySource(value = "classpath:demo-db.properties", ignoreResourceNotFound = true)
+@PropertySource(value = "classpath:demo-db.properties")
 public class DalConfiguration {
 
     @Value("${tcc_demo_db1_url}")
-    private String db1Url;
+    private String tccDemoDb1Url;
 
     @Value("${tcc_demo_db1_user}")
     private String db1User;
@@ -45,10 +45,10 @@ public class DalConfiguration {
     @Value("${tcc_demo_db2_password}")
     private String db2Password;
 
-    @Bean(initMethod = "init", destroyMethod = "close", name = "demoDataSource1")
+    @Bean(name = "demoDataSource1",initMethod = "init", destroyMethod = "close")
     public DruidDataSource demoDataSource1() {
         DruidDataSource dataSource = new DruidDataSource();
-        dataSource.setUrl(db1Url);
+        dataSource.setUrl(tccDemoDb1Url);
         dataSource.setUsername(db1User);
         dataSource.setPassword(db1Password);
         //连接池大小

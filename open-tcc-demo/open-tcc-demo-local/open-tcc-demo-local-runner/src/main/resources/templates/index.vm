@@ -1,0 +1,29 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <p>tcc_demo_db1/tcc_t1</p>
+        <table border="1">
+            #foreach($elem in $tccTbOnes)
+                <tr>
+                    <td>$elem.getT1Id()</td>
+                    <td>$elem.getUniqNo()</td>
+                    <td>$elem.getStatus()</td>
+                </tr>
+            #end
+        </table>
+        <br/>
+        <p>tcc_demo_db2/tcc_t2</p>
+        <table border="1">
+            #foreach($elem in $tccTbOnes)
+                <tr>
+                    <td>$elem.getT1Id()</td>
+                    <td>$elem.getUniqNo()</td>
+                    <td>$elem.getStatus()</td>
+                </tr>
+            #end
+        </table>
+    </body>
+
+</html>

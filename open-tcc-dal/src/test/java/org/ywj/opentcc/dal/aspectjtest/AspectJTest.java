@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Log4jConfigurer;
+import org.ywj.opentcc.common.util.UUIDUtils;
 import org.ywj.opentcc.dal.aop.AopComponent;
 import org.ywj.opentcc.dal.configuration.DaoConfiguration;
 
@@ -47,5 +48,10 @@ public class AspectJTest {
     @Test
     public void myTest() {
         aopComponent.print();
+    }
+
+    @Test
+    public void uuid() {
+        System.out.println(UUIDUtils.uuid());
     }
 }
