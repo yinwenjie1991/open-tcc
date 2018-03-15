@@ -14,5 +14,5 @@ public interface QueryService {
 
     List<TccTbOne> queryAllTccTbOne();
 
-    List<TccTbTwo> queryAllTccTbTwo();
+//    List<TccTbTwo> queryAllTccTbTwo();
 }

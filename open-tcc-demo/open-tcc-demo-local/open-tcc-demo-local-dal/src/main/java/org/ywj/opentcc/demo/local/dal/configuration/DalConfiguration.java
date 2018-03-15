@@ -4,11 +4,14 @@ import com.alibaba.druid.pool.DruidDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -24,33 +27,41 @@ import org.springframework.transaction.support.TransactionTemplate;
 @Configuration
 @ComponentScan("org.ywj.opentcc.demo.local.dal")
 @EnableTransactionManagement
-@PropertySource(value = "classpath:demo-db.properties")
+@PropertySource(value = "classpath:demo-db.properties",ignoreResourceNotFound = true)
 public class DalConfiguration {
 
-    @Value("${tcc_demo_db1_url}")
-    private String tccDemoDb1Url;
+    @Value("${tcc.dbone.url}")
+    private String dbOneUrl;
 
-    @Value("${tcc_demo_db1_user}")
-    private String db1User;
+    @Value("${tcc.dbone.user}")
+    private String dbOneUser;
 
-    @Value("${tcc_demo_db1_password}")
-    private String db1Password;
+    @Value("${tcc.dbone.password}")
+    private String dbOnePassword;
 
-    @Value("${tcc_demo_db2_url}")
-    private String db2Url;
+//    @Value("${tcc.dbtwo.url}")
+//    private String dbTwoUrl;
+//
+//    @Value("${tcc.dbtwo.user}")
+//    private String dbTwoUser;
+//
+//    @Value("${tcc.dbtwo.password}")
+//    private String dbTwoPassword;
 
-    @Value("${tcc_demo_db2_user}")
-    private String db2User;
+//    @Autowired
+//    private Environment env;
 
-    @Value("${tcc_demo_db2_password}")
-    private String db2Password;
-
-    @Bean(name = "demoDataSource1",initMethod = "init", destroyMethod = "close")
-    public DruidDataSource demoDataSource1() {
+    @Bean(name = "demoDataSourceOne",initMethod = "init", destroyMethod = "close")
+    public DruidDataSource demoDataSourceOne() {
+        String path = DalConfiguration.class.getResource("/").toString();
+        System.out.println("path = " + path);
         DruidDataSource dataSource = new DruidDataSource();
-        dataSource.setUrl(tccDemoDb1Url);
-        dataSource.setUsername(db1User);
-        dataSource.setPassword(db1Password);
+//        dataSource.setUrl(env.getProperty("tcc.dbone.url"));
+//        dataSource.setUsername(env.getProperty("tcc.dbone.user"));
+//        dataSource.setPassword(env.getProperty("tcc.dbone.password"));
+        dataSource.setUrl(dbOneUrl);
+        dataSource.setUsername(dbOneUser);
+        dataSource.setPassword(dbOnePassword);
         //连接池大小
         dataSource.setInitialSize(5);
         //最大连接池数量
@@ -73,91 +84,96 @@ public class DalConfiguration {
         return dataSource;
     }
 
-    @Bean(name = "sqlSessionFactoryBean1")
-    public SqlSessionFactory sqlSessionFactoryBean1() throws Exception {
+    @Bean(name = "sqlSessionFactoryBeanOne")
+    public SqlSessionFactory sqlSessionFactoryBeanOne() throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        sqlSessionFactoryBean.setDataSource(demoDataSource1());
+        sqlSessionFactoryBean.setDataSource(demoDataSourceOne());
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath*:META-INF/mappers/dbone/**/*.xml"));
         sqlSessionFactoryBean.setTypeAliasesPackage("com.ywj.opentcc.demo.local.dal.entity");
         return sqlSessionFactoryBean.getObject();
     }
 
-    @Bean(name = "transactionManager1")
-    public PlatformTransactionManager transactionManager1() {
-        return new DataSourceTransactionManager(demoDataSource1());
+    @Bean(name = "transactionManagerOne")
+    public PlatformTransactionManager transactionManagerOne() {
+        return new DataSourceTransactionManager(demoDataSourceOne());
     }
 
-    @Bean(name = "transactionTemplate1")
-    public TransactionTemplate transactionTemplate1() {
+    @Bean(name = "transactionTemplateOne")
+    public TransactionTemplate transactionTemplateOne() {
         TransactionTemplate transactionTemplate = new TransactionTemplate();
-        transactionTemplate.setTransactionManager(transactionManager1());
+        transactionTemplate.setTransactionManager(transactionManagerOne());
         return transactionTemplate;
     }
 
-    @Bean(initMethod = "init", destroyMethod = "close", name = "demoDataSource2")
-    public DruidDataSource demoDataSource2() {
-        DruidDataSource dataSource = new DruidDataSource();
-        dataSource.setUrl(db2Url);
-        dataSource.setUsername(db2User);
-        dataSource.setPassword(db2Password);
-        //连接池大小
-        dataSource.setInitialSize(5);
-        //最大连接池数量
-        dataSource.setMaxActive(20);
-        //最小连接池数量
-        dataSource.setMinIdle(5);
-        //获取连接最大等待时间
-        dataSource.setMaxWait(1000);
-        //配置间隔多久进行一次检测,检测需要关闭的空闲连接
-        dataSource.setTimeBetweenConnectErrorMillis(6000);
-        //配置一个连接在池中的最小生存时间
-        dataSource.setMinEvictableIdleTimeMillis(300000);
-        dataSource.setValidationQuery("SELECT 'x'");
-        dataSource.setTestWhileIdle(true);
-        dataSource.setTestOnBorrow(false);
-        dataSource.setTestOnReturn(false);
+//    @Bean(initMethod = "init", destroyMethod = "close", name = "demoDataSourceTwo")
+//    public DruidDataSource demoDataSourceTwo() {
+//        DruidDataSource dataSource = new DruidDataSource();
+//        dataSource.setUrl(env.getProperty("tcc.dbtwo.url"));
+//        dataSource.setUsername(env.getProperty("tcc.dbtwo.user"));
+//        dataSource.setPassword(env.getProperty("tcc.dbtwo.password"));
+//        //连接池大小
+//        dataSource.setInitialSize(5);
+//        //最大连接池数量
+//        dataSource.setMaxActive(20);
+//        //最小连接池数量
+//        dataSource.setMinIdle(5);
+//        //获取连接最大等待时间
+//        dataSource.setMaxWait(1000);
+//        //配置间隔多久进行一次检测,检测需要关闭的空闲连接
+//        dataSource.setTimeBetweenConnectErrorMillis(6000);
+//        //配置一个连接在池中的最小生存时间
+//        dataSource.setMinEvictableIdleTimeMillis(300000);
+//        dataSource.setValidationQuery("SELECT 'x'");
+//        dataSource.setTestWhileIdle(true);
+//        dataSource.setTestOnBorrow(false);
+//        dataSource.setTestOnReturn(false);
+//
+//        dataSource.setPoolPreparedStatements(false);
+//
+//        return dataSource;
+//    }
 
-        dataSource.setPoolPreparedStatements(false);
+//    @Bean(name = "sqlSessionFactoryBeanTwo")
+//    public SqlSessionFactory sqlSessionFactoryBeanTwo() throws Exception {
+//        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+//        sqlSessionFactoryBean.setDataSource(demoDataSourceTwo());
+//        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+//        sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath*:META-INF/mappers/dbtwo/**/*.xml"));
+//        sqlSessionFactoryBean.setTypeAliasesPackage("com.ywj.opentcc.demo.local.dal.entity");
+//        return sqlSessionFactoryBean.getObject();
+//    }
+//
+//    @Bean(name = "transactionManagerTwo")
+//    public PlatformTransactionManager transactionManagerTwo() {
+//        return new DataSourceTransactionManager(demoDataSourceTwo());
+//    }
+//
+//    @Bean(name = "transactionTemplateTwo")
+//    public TransactionTemplate transactionTemplateTwo() {
+//        TransactionTemplate transactionTemplate = new TransactionTemplate();
+//        transactionTemplate.setTransactionManager(transactionManagerTwo());
+//        return transactionTemplate;
+//    }
 
-        return dataSource;
-    }
-
-    @Bean(name = "sqlSessionFactoryBean2")
-    public SqlSessionFactory sqlSessionFactoryBean2() throws Exception {
-        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        sqlSessionFactoryBean.setDataSource(demoDataSource2());
-        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath*:META-INF/mappers/dbtwo/**/*.xml"));
-        sqlSessionFactoryBean.setTypeAliasesPackage("com.ywj.opentcc.demo.local.dal.entity");
-        return sqlSessionFactoryBean.getObject();
-    }
-
-    @Bean(name = "transactionManager2")
-    public PlatformTransactionManager transactionManager2() {
-        return new DataSourceTransactionManager(demoDataSource2());
-    }
-
-    @Bean(name = "transactionTemplate2")
-    public TransactionTemplate transactionTemplate2() {
-        TransactionTemplate transactionTemplate = new TransactionTemplate();
-        transactionTemplate.setTransactionManager(transactionManager2());
-        return transactionTemplate;
-    }
-
-    @Bean(name = "mapperScannerConfigurer1")
-    public MapperScannerConfigurer mapperScannerConfigurer1() {
+    @Bean(name = "mapperScannerConfigurerOne")
+    public MapperScannerConfigurer mapperScannerConfigurerOne() {
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
         mapperScannerConfigurer.setBasePackage("org.ywj.opentcc.demo.local.dal.mapper.dbone.auto");
-        mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactoryBean1");
+        mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactoryBeanOne");
         return mapperScannerConfigurer;
     }
 
-    @Bean(name = "mapperScannerConfigurer2")
-    public MapperScannerConfigurer mapperScannerConfigurer2() {
-        MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
-        mapperScannerConfigurer.setBasePackage("org.ywj.opentcc.demo.local.dal.mapper.dbtwo.auto");
-        mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactoryBean2");
-        return mapperScannerConfigurer;
-    }
+//    @Bean(name = "mapperScannerConfigurerTwo")
+//    public MapperScannerConfigurer mapperScannerConfigurerTwo() {
+//        MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
+//        mapperScannerConfigurer.setBasePackage("org.ywj.opentcc.demo.local.dal.mapper.dbtwo.auto");
+//        mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactoryBeanTwo");
+//        return mapperScannerConfigurer;
+//    }
+
+//    @Bean
+//    public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
+//        return new PropertySourcesPlaceholderConfigurer();
+//    }
 }

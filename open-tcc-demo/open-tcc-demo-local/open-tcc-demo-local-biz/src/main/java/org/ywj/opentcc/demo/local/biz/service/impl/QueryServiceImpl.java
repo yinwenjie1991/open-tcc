@@ -21,17 +21,17 @@ public class QueryServiceImpl implements QueryService{
     @Autowired
     private TccTbOneDAO tccTbOneDAO;
 
-    @Autowired
-    private TccTbTwoDAO tccTbTwoDAO;
+//    @Autowired
+//    private TccTbTwoDAO tccTbTwoDAO;
 
     @Override
     public List<TccTbOne> queryAllTccTbOne() {
         return tccTbOneDAO.selectAll();
     }
 
-    @Override
-    public List<TccTbTwo> queryAllTccTbTwo() {
-        return tccTbTwoDAO.selectAll();
-    }
+//    @Override
+//    public List<TccTbTwo> queryAllTccTbTwo() {
+//        return tccTbTwoDAO.selectAll();
+//    }
 
 }

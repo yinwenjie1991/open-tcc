@@ -28,9 +28,9 @@ public class HomeController {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             List<TccTbOne> tccTbOnes = queryService.queryAllTccTbOne();
-            List<TccTbTwo> tccTbTwos = queryService.queryAllTccTbTwo();
+//            List<TccTbTwo> tccTbTwos = queryService.queryAllTccTbTwo();
             map.put("tccTbOnes", tccTbOnes);
-            map.put("tccTbTwos", tccTbTwos);
+//            map.put("tccTbTwos", tccTbTwos);
         } catch (Exception e) {
             return new ModelAndView("error");
         }

@@ -14,7 +14,7 @@ import java.util.List;
  * 作者: yinwenjie
  * 日期: 2018-03-12
  */
-@Repository("tccTbTwoDAO")
+//@Repository("tccTbTwoDAO")
 public class TccTbTwoDAOImpl implements TccTbTwoDAO {
 
     @Autowired

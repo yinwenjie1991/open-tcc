@@ -1,5 +1,6 @@
 package org.ywj.opentcc.demo.local.runner;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
@@ -14,21 +15,13 @@ import org.ywj.opentcc.demo.local.web.configuration.WebConfiguration;
  * 日期: 2018-03-09
  */
 @SpringBootApplication
-//@PropertySource(value = {"classpath*:demo-db.properties",
-//        "classpath*:open-tcc-db.properties"}, ignoreResourceNotFound = true)
+@PropertySource(value = {"classpath*:demo-db.properties",
+        "classpath*:open-tcc-db.properties"}, ignoreResourceNotFound = true)
 //@PropertySource(value = {"classpath*:open-tcc-db.properties"}, ignoreResourceNotFound = true)
 @Import(WebConfiguration.class)
-public class ApplicationRunner extends WebMvcConfigurerAdapter {
-
-    private String webRoot = "file:" + System.getProperty("user.dir") + "/open-tcc-demo/webroot/assets/";
-
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/assets/**").addResourceLocations(webRoot);
-    }
+public class ApplicationRunner {
 
     public static void main(String[] args) {
-        System.setProperty("server.port" , "8088");
         SpringApplication.run(ApplicationRunner.class , args);
     }
 }
